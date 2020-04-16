@@ -7,6 +7,8 @@
         $_SESSION['indice'] = 0;
         $_SESSION['plantado'] = false;
         $_SESSION['mensaje'] = "";
+        $_SESSION['cartas'] = array();
+        $_SESSION['cartasIA'] = array();
     }
 
     $puntuacionIA = 0;
@@ -50,7 +52,8 @@
         do{
             $carta = cogerCarta();
             $puntuacionIA += $carta->getPuntuacion();
-        }while($puntuacionIA <= 5);
+            array_push($_SESSION['cartasIA'], $carta);
+        }while($puntuacionIA <= 4);
         return $puntuacionIA;
     }
 
@@ -58,7 +61,12 @@
         $carta = $_SESSION['baraja'][$_SESSION['indice']];
         $_SESSION['indice']++;
         return $carta;
+    }
 
+    function imprimirCartas($cartas){
+        foreach($cartas as $carta){
+            echo "<img src=\"".$carta->getImagen()."\"></img>";
+        }
     }
 
     function plantarse($puntuacionIA){
@@ -87,9 +95,11 @@
     for($i = 0; $i < 40; $i++){
         do{
             $repetido = false;
+            $numeroAl = rand(1, 10);
             $palo = generarPalo(rand(1,4));
-            $numero = generarNumero(rand(1, 10));
+            $numero = generarNumero($numeroAl);
             $puntuacion = 0;
+            $ruta = "./img/".$palo."/".$numeroAl.".jpg";
 
             if(!is_numeric($numero)){
                 $puntuacion = 0.5;
@@ -97,7 +107,7 @@
                 $puntuacion = $numero;
             }
 
-            $carta = new Carta($numero, $palo, $puntuacion);
+            $carta = new Carta($numero, $palo, $puntuacion, $ruta);
 
             foreach($baraja as $cartaBaraja){
                     if(compararCartas($carta, $cartaBaraja)){
@@ -122,6 +132,7 @@
     if(isset($_POST['cogerCarta'])){
         if(!$_SESSION['plantado']){
             $carta = cogerCarta();
+            array_push($_SESSION['cartas'], $carta);
             $_SESSION['puntuacionJugador'] += $carta->getPuntuacion();
             $lCogerCarta = true;
             
@@ -149,16 +160,24 @@
         echo "<br><a href=\"cerrar.php\">Reiniciar</a>";
         echo "<form action= ".htmlspecialchars($_SERVER["PHP_SELF"])." method= \"POST\">";
         echo "Tu puntuación es: ".$_SESSION['puntuacionJugador']."<br>";
-        if($lCogerCarta){
-            echo "<br>Has cogido ".$carta->getNumero()." de ".$carta->getPalo().".<br>";
-        }
         if($_SESSION['plantado']){
             echo"<table border=1>";
             echo "<caption>Resultados</caption>";
             echo "<tr><td>Jugador</td><td>IA</td></tr>";
             echo "<td>".$_SESSION["puntuacionJugador"]."</td><td>".$puntuacionIA."</td>";
             echo "</table>";
-            echo $_SESSION['mensaje']."<br>";
+            
+        }
+        if($lCogerCarta){
+            echo "<br>Has cogido ".$carta->getNumero()." de ".$carta->getPalo().".<br>";
+            echo "<br>Tu mazo:<br>";
+            imprimirCartas($_SESSION['cartas']);
+            echo "<br>";
+        }
+        if($_SESSION['plantado']){
+            echo "<br>Mazo de la IA:<br>";
+            imprimirCartas($_SESSION['cartasIA']);
+            echo "<br>".$_SESSION['mensaje']."<br>";
         }
         echo "<input type=\"submit\" name=\"cogerCarta\" value=\"Coger Carta\">";
         echo "<input type=\"submit\" name=\"plantar\" value=\"Plantarse\">";

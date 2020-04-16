@@ -1,15 +1,15 @@
 <?php
 class Carta{
-    public $_numero;
-    public $_palo;
-    public $_puntos;
-    //private $_imagen;
+    private $_numero;
+    private $_palo;
+    private $_puntos;
+    private $_imagen;
 
-    public function __construct($numero, $palo, $puntos){
+    public function __construct($numero, $palo, $puntos, $ruta){
         $this->_numero = $numero;
         $this->_palo = $palo;
         $this->_puntos = $puntos;
-        //$this->_imagen = $puntos;
+        $this->_imagen = $ruta;
         
     }
 
@@ -23,5 +23,9 @@ class Carta{
 
     public function getPuntuacion(){
         return $this->_puntos;
+    }
+
+    public function getImagen(){
+        return $this->_imagen;
     }
 }
