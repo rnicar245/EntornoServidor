@@ -42,20 +42,24 @@
             foreach($_POST as $array => $valor){
                 if($array != "comenzar" and (strlen($array) == 1 or $valor == 10)){
                     array_push($arrayTablas, limpiarDatos($valor));
+                    $_SESSION['lcomenzar'] = true;
                 }
             }
             $_SESSION['arrayTablas'] = $arrayTablas;
-            $_SESSION['lcomenzar'] = true;
-
+            
             $arrayPreguntas = array();
-            if($_POST['cantidad'] <1 or $_POST['cantidad'] > 10){
-                $_POST['cantidad'] = 10;
-            }else{
-                $_POST['cantidad'] = limpiarDatos($_POST['cantidad']);
+            $cantidad = 10;
+            if(isset($_POST['cantidad'])){
+                if($_POST['cantidad'] >=1 and $_POST['cantidad'] <=10){
+                    echo "saiohfsdahfsdauifsdjafsda";
+                    $cantidad = limpiarDatos($_POST['cantidad']);
+                }
             }
+            
+            $cantidad--;
             array_push($arrayPreguntas, rand(1, 10));
             
-            for($i = 1; $i <= $_POST['cantidad']; $i++){
+            for($i = 1; $i <= $cantidad; $i++){
                 $rand = 0;
                 do{
                     $noEncontrado = false;
@@ -70,7 +74,6 @@
             }
 
             $_SESSION['preguntas'] = $arrayPreguntas;
-            print_r($_SESSION['preguntas']);
             
         }
         echo "<br><a href=\"cerrar.php\">Reiniciar</a><br>";
