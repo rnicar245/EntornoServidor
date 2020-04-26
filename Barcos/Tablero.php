@@ -86,11 +86,13 @@ class Tablero{
             echo "<td>".$i."</td>";
             for($j=0; $j<=$this->_alto; $j++){
                 if($this->_tablero[$i][$j] === "*"){
-                    echo "<td><input style=\"color:red;border:none;background-color:red;cursor:pointer\"type=\"submit\" name=\"".$i.",".$j."\" value=\"".$this->_tablero[$i][$j]."\"></td>";
+                    echo "<td style=\"background-color:red\"><input style=\"color:red;border:none;background-color:red;cursor:pointer\"type=\"submit\" name=\"".$i.",".$j."\" value=\"".$this->_tablero[$i][$j]."\"></td>";
                 }else if($this->_tablero[$i][$j] != 0){
-                    echo "<td><input style=\"color:red;border:none;background-color:white;cursor:pointer\"type=\"submit\" name=\"".$i.",".$j."\" value=\"".$this->_tablero[$i][$j]."\"></td>";
+                    echo "<td><input style=\"color:red;border:none;background-color:white;cursor:pointer\"type=\"submit\" name=\"".$i.",".$j."\" value=\"\"></td>";
+                }else if($this->_tablero[$i][$j] === "X"){
+                    echo "<td style=\"background-color:lightblue\"><input style=\"color:lightblue;border:none;background-color:lightblue;cursor:pointer\"type=\"submit\" name=\"".$i.",".$j."\" value=\"".$this->_tablero[$i][$j]."\"></td>";
                 }else{
-                    echo "<td><input style=\"border:none;background-color:white;cursor:pointer\"type=\"submit\" name=\"".$i.",".$j."\" value=\"".$this->_tablero[$i][$j]."\"></td>";
+                    echo "<td><input style=\"border:none;background-color:white;cursor:pointer\"type=\"submit\" name=\"".$i.",".$j."\" value=\"\"></td>";
                 }
             }
             echo "</tr>";
@@ -129,7 +131,8 @@ class Tablero{
             }else{
                 $mensaje = "Tocado";
             }
-        }else {
+        }else{
+            $this->_tablero[$x][$y] = "X";
             $mensaje = "Agua";
         }
 

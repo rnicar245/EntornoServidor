@@ -77,7 +77,7 @@ class Barco{
         $contador = 0;
         foreach($this->_unidades as $coordenadas){
             if($coordenadas[0] == $x and $coordenadas[1] == $y){
-                array_push($coordenadas, -1);
+                array_push($coordenadas, $valor);
                 $this->_unidades[$contador] = $coordenadas;
             }
             $contador++;
