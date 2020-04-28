@@ -10,7 +10,7 @@
     if (!isset($_SESSION['aut'])){
         $_SESSION['aut'] = false;
         $_SESSION['user'] = 'Invitado';
-        $_SESSION['rol'] = "usuario";
+        $_SESSION['rol'] = "invitado";
         $_SESSION['usuarioCreado'] = false;
     }
 
@@ -62,6 +62,7 @@
         fclose($file);
     }
 
+    echo "<br><a href=\"https://github.com/rnicar245/EntornoServidor/tree/master/AutBasicoUsuarios\">Github</a>";
     if(!$_SESSION['aut']){
         echo "<h1>Login</h1>";
         echo "<form action= ".htmlspecialchars($_SERVER["PHP_SELF"])." method= \"POST\">";
