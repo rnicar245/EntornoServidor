@@ -1,9 +1,3 @@
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Autentificacion de usuarios</title>
-</head>
-<body>
 <?php
     session_start();
 
@@ -61,7 +55,15 @@
         }
         fclose($file);
     }
+?>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Autentificacion de usuarios</title>
+</head>
+<body>
 
+<?php
     echo "<br><a href=\"https://github.com/rnicar245/EntornoServidor/tree/master/AutBasicoUsuarios\">Github</a>";
     if(!$_SESSION['aut']){
         echo "<h1>Login</h1>";
